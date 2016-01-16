@@ -5,6 +5,8 @@ public class BallMoving : MonoBehaviour {
 
     public float ballJumpPower;
 
+    public float tileSize; //타일 개개의 사이즈를 의미함
+
     private Vector3 myPos = new Vector3();
 
     public float speed;
@@ -51,18 +53,18 @@ public class BallMoving : MonoBehaviour {
         {
             //speed = ;
             transform.Translate(Vector3.left * speed * Time.deltaTime);
-            transform.position = new Vector3(transform.position.x, transform.position.y, ballJumpPower * (transform.position.x - myPos.x) * (transform.position.x - myPos.x + 1) - 0.5f);
-            if (transform.position.x <=myPos.x - 1)
+            transform.position = new Vector3(transform.position.x, transform.position.y, ballJumpPower * (transform.position.x - myPos.x) * (transform.position.x - myPos.x + tileSize) - 0.5f);
+            if (transform.position.x <=myPos.x - tileSize)
             {
-                myPos = new Vector3(myPos.x - 1, myPos.y,myPos.z);
+                myPos = new Vector3(myPos.x - tileSize, myPos.y,myPos.z);
                 direction = Random.Range(0, 4);
             }
         }
         else if(direction == 1)//오른쪽일때
         {
             transform.Translate(Vector3.right * speed * Time.deltaTime);
-            transform.position = new Vector3(transform.position.x, transform.position.y, ballJumpPower * (transform.position.x - myPos.x) * (transform.position.x - myPos.x - 1) - 0.5f);
-            if (transform.position.x >= 1 +  myPos.x)
+            transform.position = new Vector3(transform.position.x, transform.position.y, ballJumpPower * (transform.position.x - myPos.x) * (transform.position.x - myPos.x - tileSize) - 0.5f);
+            if (transform.position.x >= tileSize +  myPos.x)
             {
                 myPos = new Vector3(myPos.x + 1, myPos.y, myPos.z);
                 direction = direction = Random.Range(0, 4);
@@ -70,20 +72,20 @@ public class BallMoving : MonoBehaviour {
         }else if (direction == 2)
         {
             transform.Translate(Vector3.down * speed * Time.deltaTime);
-            transform.position = new Vector3(transform.position.x, transform.position.y, ballJumpPower * (transform.position.y - myPos.y) * (transform.position.y - myPos.y + 1) - 0.5f);
-            if (transform.position.y <= myPos.y - 1)
+            transform.position = new Vector3(transform.position.x, transform.position.y, ballJumpPower * (transform.position.y - myPos.y) * (transform.position.y - myPos.y + tileSize) - 0.5f);
+            if (transform.position.y <= myPos.y - tileSize)
             {
-                myPos = new Vector3(myPos.x, myPos.y - 1, myPos.z);
+                myPos = new Vector3(myPos.x, myPos.y - tileSize, myPos.z);
                 direction = direction = Random.Range(0, 4);
             }
         }
         else
         {
             transform.Translate(Vector3.up * speed * Time.deltaTime);
-            transform.position = new Vector3(transform.position.x, transform.position.y, ballJumpPower * (transform.position.y - myPos.y) * (transform.position.y - myPos.y - 1) - 0.5f);
-            if (transform.position.y >= 1 + myPos.y)
+            transform.position = new Vector3(transform.position.x, transform.position.y, ballJumpPower * (transform.position.y - myPos.y) * (transform.position.y - myPos.y - tileSize) - 0.5f);
+            if (transform.position.y >= tileSize + myPos.y)
             {
-                myPos = new Vector3(myPos.x, myPos.y + 1, myPos.z);
+                myPos = new Vector3(myPos.x, myPos.y + tileSize, myPos.z);
                 direction = direction = Random.Range(0, 4);
             }
         }

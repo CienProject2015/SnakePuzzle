@@ -71,10 +71,10 @@ public class BoardManager : MonoBehaviour {
         timer = timer + Time.deltaTime;
         if (timer > BallSpawnTime)
         {
-            timer = 0;
-            /*SpawnBall_in_RandPos();
+            timer = -50000000;
             SpawnBall_in_RandPos();
-            SpawnBall_in_RandPos();*/
+            SpawnBall_in_RandPos();
+            SpawnBall_in_RandPos();
             ballSpawnPos.Clear();
             getAllSpawnPos_of_Ball();
         }
