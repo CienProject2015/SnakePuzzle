@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Size>
+		<Height>12</Height>
+		<Width>12</Width>
+	</Size>
 	<Tile>
 		<Spawn>U,0,1</Spawn>
 		<Red>0,1,1</Red>
