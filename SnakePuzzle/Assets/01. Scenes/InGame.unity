@@ -109,13 +109,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1071653090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 054af5aab15fcf349bdf94f95fe7ca33, type: 3}
+  m_Script: {fileID: 11500000, guid: c12810da0ddb75d4c9b32465155b82c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballJumpPower: 0
-  tileSize: 0
-  speed: 0
-  direction: 0
+  ballJumpPower: 18
+  ballSpeed: 2
+  Ball: {fileID: 174514, guid: 0378f29961715e74192fff6c3f6d0646, type: 2}
 --- !u!4 &1071653092
 Transform:
   m_ObjectHideFlags: 0
@@ -127,7 +126,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!1 &1860969751
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,7 +201,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!1 &1951912904
 GameObject:
   m_ObjectHideFlags: 0

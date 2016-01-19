@@ -16,7 +16,7 @@ public class BoardManager : MonoBehaviour {
 
     private List<Vector3> ballSpawnPos = new List<Vector3>();
     private List<GameObject> balls = new List<GameObject>();
-
+    private GameObject ballMa;
     private GameObject[,] TileObject;
 
     public GameObject Ball;
@@ -34,6 +34,8 @@ public class BoardManager : MonoBehaviour {
 	}
     void initialize()
     {
+        ballMa = GameObject.Find("BallManager");
+        ballMa.GetComponent<BallManager>().init(tileSize);
         timer = 4;
 
         mainBoard = new Board(board_Height, board_Width);
@@ -74,28 +76,15 @@ public class BoardManager : MonoBehaviour {
         timer = timer + Time.deltaTime;
         if (timer > BallSpawnTime)
         {
-            timer = -50000000;
+            timer = 0;
             SpawnBall_in_RandPos();
             SpawnBall_in_RandPos();
             SpawnBall_in_RandPos();
             ballSpawnPos.Clear();
             getAllSpawnPos_of_Ball();
         }
-
-        for (int i = 0; i < balls.Count; i++)
-        {
-            balls[i].GetComponent<BallMoving>().move(Time.deltaTime);
-        }
-
-        /*if (BallMoving.ChangeDir == true)
-        {
-            for(int i=0; i<balls.Count; i++)
-            {
-                balls[i].GetComponent<BallMoving>().changeDirection();
-            }
-        }*/
         
-        
+
          
 	}
 
@@ -157,12 +146,9 @@ public class BoardManager : MonoBehaviour {
     }
     public void SpawnBall(Vector3 pos){
 
-        Debug.Log(pos);
-        balls.Add(Instantiate(Ball, pos, Quaternion.identity)as GameObject);
-
-        balls[balls.Count-1].GetComponent<BallMoving>().SetPos(pos);
+        ballMa.GetComponent<BallManager>().SpawnBall(pos);
     }
-    public void Swap()
+    public void SwapTile()
     {
 
     }
