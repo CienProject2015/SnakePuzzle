@@ -68,6 +68,9 @@ public class BoardManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
+
+
         timer = timer + Time.deltaTime;
         if (timer > BallSpawnTime)
         {
@@ -78,7 +81,22 @@ public class BoardManager : MonoBehaviour {
             ballSpawnPos.Clear();
             getAllSpawnPos_of_Ball();
         }
-	    
+
+        for (int i = 0; i < balls.Count; i++)
+        {
+            balls[i].GetComponent<BallMoving>().move(Time.deltaTime);
+        }
+
+        /*if (BallMoving.ChangeDir == true)
+        {
+            for(int i=0; i<balls.Count; i++)
+            {
+                balls[i].GetComponent<BallMoving>().changeDirection();
+            }
+        }*/
+        
+        
+         
 	}
 
     public void DrawBoard()
@@ -138,7 +156,8 @@ public class BoardManager : MonoBehaviour {
         ballSpawnPos.RemoveAt(temp);
     }
     public void SpawnBall(Vector3 pos){
-        
+
+        Debug.Log(pos);
         balls.Add(Instantiate(Ball, pos, Quaternion.identity)as GameObject);
 
         balls[balls.Count-1].GetComponent<BallMoving>().SetPos(pos);
