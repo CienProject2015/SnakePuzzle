@@ -57,10 +57,9 @@ public class BallMoving : MonoBehaviour {
 
         transform.position = new Vector3(transform.position.x, transform.position.y, z);
 
-        Debug.Log(myNum + " ++ " + direction+ " + " + speed * deltaTime + " +++ " + transform.position.z);
+        //Debug.Log(myNum + " ++ " + direction+ " + " + speed * deltaTime + " +++ " + transform.position.z);
         if (transform.position.z >= -0.5f)
         {
-
             transform.position = new Vector3(transform.position.x, transform.position.y, -0.5f);
             changeDirection();
             //ChangeDir = true;
