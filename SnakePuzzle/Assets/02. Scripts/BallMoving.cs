@@ -5,10 +5,10 @@ public class BallMoving : MonoBehaviour {
     public static int BallNum = 0;
     public float ballJumpPower;
     private int myNum;
-    public float tileSize; //타일 개개의 사이즈를 의미함
+    //private float tileSize; //타일 개개의 사이즈를 의미함
 
     private Vector3 myPos = new Vector3();
-
+    private Transform childTrans;
     public static bool ChangeDir = false;
 
     private float speed;
@@ -20,11 +20,36 @@ public class BallMoving : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+        childTrans = transform.FindChild("Ball").transform;
         speed = GameObject.Find("BallManager").GetComponent<BallManager>().ballSpeed;
+        
         myNum = BallNum++;
         myPos = transform.position;
         direction = 1;
 	}
+
+
+    public void _2Dmove(float moveDist, float y)
+    {
+        if (direction == 3)//방향이 왼쪽일때
+        {
+            transform.position = new Vector3(myPos.x-moveDist, myPos.y, -0.5f);
+        }
+        else if (direction == 1)//오른쪽일때
+        {
+            transform.position = new Vector3(myPos.x + moveDist, myPos.y, -0.5f);
+        }
+        else if (direction == 2)//아래일때
+        {
+            transform.position = new Vector3(myPos.x, myPos.y - moveDist, -0.5f);
+        }
+        else//위일때
+        {
+            transform.position = new Vector3(myPos.x, myPos.y + moveDist, -0.5f);
+        }
+        childTrans.position = new Vector3(childTrans.position.x, transform.position.y + y + 0.2f*BallManager.tileSize,  -0.5f);
+    }
 
     public void SetPos(Vector3 a)
     {
@@ -56,12 +81,13 @@ public class BallMoving : MonoBehaviour {
         }
 
         transform.position = new Vector3(transform.position.x, transform.position.y, z);
-
+        
+        //Debug.Log("z = " + transform.position.z);
         //Debug.Log(myNum + " ++ " + direction+ " + " + speed * deltaTime + " +++ " + transform.position.z);
         if (transform.position.z >= -0.5f)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, -0.5f);
-            changeDirection();
+            //changeDirection();
             //ChangeDir = true;
         }
 
@@ -72,7 +98,7 @@ public class BallMoving : MonoBehaviour {
         return myPos;
     }
 
-    public void changeDirection()
+    /*public void changeDirection()
     {
         if (transform.position.x <= myPos.x - tileSize)
         {
@@ -90,13 +116,47 @@ public class BallMoving : MonoBehaviour {
         {
             myPos = new Vector3(myPos.x, myPos.y + tileSize, -0.5f);
         }
-        Debug.Log(myPos.x + "  +  " + myPos.y + "  +  " + myPos.z);
-        
+
+        Debug.Log(tileSize);
+        //Debug.Log(myNum + "  " + myPos.x + "  +  " + myPos.y + "  +  " + myPos.z);
+        //if()
         
         direction = Random.Range(0, 4);
         checkLoc();
         ChangeDir = false;
         
+    }*/
+
+    public void changeDirection()
+    {
+        float tileSize = BallManager.tileSize;
+
+        if (transform.position.x <= myPos.x - tileSize)
+        {
+            myPos = new Vector3(myPos.x - tileSize, myPos.y, -0.5f);
+        }
+        if (transform.position.x >= tileSize + myPos.x)
+        {
+            myPos = new Vector3(myPos.x + tileSize, myPos.y, -0.5f);
+        }
+        if (transform.position.y <= myPos.y - tileSize)
+        {
+            myPos = new Vector3(myPos.x, myPos.y - tileSize, -0.5f);
+        }
+        if (transform.position.y >= tileSize + myPos.y)
+        {
+            myPos = new Vector3(myPos.x, myPos.y + tileSize, -0.5f);
+        }
+
+        Debug.Log(tileSize);
+        //Debug.Log(myNum + "  " + myPos.x + "  +  " + myPos.y + "  +  " + myPos.z);
+        //if()
+
+        direction = Random.Range(0, 4);
+        checkLoc();
+        ChangeDir = false;
+
+
     }
 
     private void checkLoc(int xSize = 11, int ySize = 11)

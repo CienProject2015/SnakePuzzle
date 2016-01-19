@@ -78,8 +78,8 @@ public class BoardManager : MonoBehaviour {
         {
             timer = 0;
             SpawnBall_in_RandPos();
-            SpawnBall_in_RandPos();
-            SpawnBall_in_RandPos();
+            //SpawnBall_in_RandPos();
+            //SpawnBall_in_RandPos();
             ballSpawnPos.Clear();
             getAllSpawnPos_of_Ball();
         }
