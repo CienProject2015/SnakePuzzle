@@ -130,6 +130,7 @@ public class BoardManager : MonoBehaviour {
                         TileObject[i, j].transform.parent = GameObject.Find("Board").transform;
                         break;
                     default:
+                        Debug.Log(tile[i, j]);
                         Debug.Log("None");
                         break;
                 }

@@ -34,9 +34,8 @@ public class BallManager : MonoBehaviour
             Vector3 tempVec = balls[0].GetComponent<BallMoving>().getMyPos();
         }
         tempTime = tempTime + Time.deltaTime;
-        //Debug.Log("시간 = " + tempTime);
-        //moveDist += ballSpeed * Time.deltaTime;
         moveDist += tileSize * Time.deltaTime;
+
         float y = -ballJumpPower * (moveDist) * (moveDist - tileSize);
 
         
@@ -49,8 +48,7 @@ public class BallManager : MonoBehaviour
                 balls[i].GetComponent<BallMoving>().changeDirection();
             }
             
-            Debug.Log("경로변경!" + (tempTime-atime));
-            atime = tempTime;
+            
             moveDist = 0;
             
         }else{

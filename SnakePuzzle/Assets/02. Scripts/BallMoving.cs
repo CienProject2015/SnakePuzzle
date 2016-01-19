@@ -148,7 +148,6 @@ public class BallMoving : MonoBehaviour {
             myPos = new Vector3(myPos.x, myPos.y + tileSize, -0.5f);
         }
 
-        Debug.Log(tileSize);
         //Debug.Log(myNum + "  " + myPos.x + "  +  " + myPos.y + "  +  " + myPos.z);
         //if()
 
