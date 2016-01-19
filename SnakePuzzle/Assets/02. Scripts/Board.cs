@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 
 /*
  * Red
@@ -25,57 +26,30 @@ public class Board{
     private int board_Width;
     private string tempColor;
 
-
-
-
-
-    public Board()
-    {
-        board_Height = 7;
-        board_Width = 7;
+    public Board(){
+        board_Height = 12;
+        board_Width = 12;
         Tile = new string[board_Height, board_Width];
-        makeRndSquare();
+		loadTileDB ();
     }
-    public Board(int a, int b)
-    {
+
+    public Board(int a, int b){
         board_Height = a;
         board_Width = b;
         Tile = new string[board_Height, board_Width];
-        makeRndSquare();
+		loadTileDB ();
+
     }
 
-    public string[,] getTile()
-    {
+    public string[,] getTile(){
         return Tile;
     }
-    public void makeRndSquare()
-    {
-        for (int i = 1; i < board_Height - 1; i++)
-        {
-            for (int j = 1; j < board_Width - 1; j++)
-            {
-                Tile[i, j] = getRndColor();
-            }
-        }
-        for (int j = 1; j < board_Height-1; j++)
-        {
-            Tile[0, j] = "SpawnUp";
-            Tile[board_Height-1, j] = "SpawnDown";
-        }
-        for (int i = 1; i < board_Width - 1; i++)
-        {
-            Tile[i, 0] = "SpawnLeft";
-            Tile[i, board_Width-1] = "SpawnRight";
-        }
 
-        Tile[0, 0] = Tile[0, board_Height-1] = Tile[board_Width-1, 0] = Tile[board_Width-1, board_Height-1] = "NULL";
-    }
-    public string getRndColor()
-    {
+
+	/*public string getRndColor(){
         string retString = "";
         int num = Random.Range(0,3);
-        switch (num)
-        {
+        switch (num){
             case 0:
                 retString = "Red";
                 break;
@@ -96,40 +70,51 @@ public class Board{
         }
 
         return retString;
-    }
-   /* public void DrawBoard()
-    {
-        for (int i = 0; i < board_Height; i++)
-        {
-            for (int j = 0; j < board_Width; j++)
-            {
-                switch (Tile[i, j])
-                {
-                    case "Red":
-                        //toInstantiate(RedTile, new Vector3(i*tileSize, j*tileSize, 0), Quaternion.identity);
-                        break;
-                    case "Blue":
-                        break;
-                    case "Yellow":
-                        break;
-                    case "Green":
-                        break;
-                    case "Purple":
-                        break;
-                    case "SpawnLeft":
-                        break;
-                    case "SpawnRight":
-                        break;
-                    case "SpawnUp":
-                        break;
-                    case "SpawnDown":
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-            //Instantiate(brick, Vector3(x, y, 0), Quaternion.identity);
     }*/
 
+
+	private void loadTileDB(){
+		XmlDocument xmldoc = new XmlDocument ();
+		xmldoc.Load ("DB.xml");
+		XmlElement root = xmldoc.DocumentElement;
+		XmlNodeList nodes = root.ChildNodes;
+
+		int x, y;
+		string text;
+		string[] parse;
+		string[] tile_list = { "Spawn", "Red","Yellow","Green","Blue","Purple"};
+
+		foreach (XmlNode node in nodes) {
+			for(int i = 0 ; i < tile_list.Length; i++){
+				text = node.SelectSingleNode(tile_list[i]).InnerText;
+				if (text != "null"){
+					parse = node.SelectSingleNode (tile_list[i]).InnerText.Split (',');
+					x = XmlConvert.ToInt32 (parse [1]);
+					y = XmlConvert.ToInt32 (parse [2]);
+					switch(parse[0]){
+					case "U":
+						Tile [x, y] = "SpawnUp";
+						break;
+					case "D":
+						Tile [x, y] = "SpawnDown";
+						break;
+					case "R":
+						Tile [x, y] = "SpawnRight";
+						break;
+					case "L":
+						Tile [x, y] = "SpawnLeft";
+						break;
+					case "0":
+						Tile [x, y] = tile_list[i];
+						break;
+					default :
+						break;
+					}
+				}
+			}// end for 
+		}// end foreach
+		Tile[0, 0] = Tile[0, board_Height-1] = Tile[board_Width-1, 0] = Tile[board_Width-1, board_Height-1] = "NULL";
+	}
 }
+
+
