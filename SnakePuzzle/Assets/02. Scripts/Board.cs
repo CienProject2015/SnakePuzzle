@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
 /*
  * Red
  * Blue
@@ -24,6 +25,7 @@ public class Board{
     private int board_Height;
     private int board_Width;
     private string tempColor;
+    private DB_Loader db_loader = new DB_Loader();
 
 
 
@@ -31,17 +33,19 @@ public class Board{
 
     public Board()
     {
-        board_Height = 7;
-        board_Width = 7;
-        Tile = new string[board_Height, board_Width];
-        makeRndSquare();
+        //board_Height = 7;
+        //board_Width = 7;
+        //Tile = new string[board_Height, board_Width];
+        //makeRndSquare();
+        Tile = db_loader.get_tile();
     }
     public Board(int a, int b)
     {
-        board_Height = a;
+        /*board_Height = a;
         board_Width = b;
         Tile = new string[board_Height, board_Width];
-        makeRndSquare();
+        makeRndSquare();*/
+        Tile = db_loader.get_tile();
     }
 
     public string[,] getTile()
