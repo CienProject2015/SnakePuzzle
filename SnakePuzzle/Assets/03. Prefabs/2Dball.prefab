@@ -24,7 +24,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 431100}
-  - 114: {fileID: 11426224}
   m_Layer: 0
   m_Name: 2Dball
   m_TagString: Untagged
@@ -86,19 +85,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 431100}
   m_RootOrder: 1
---- !u!114 &11426224
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 134102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e6c68b7bdcd9664fb79a10fe55f9c58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ballJumpPower: 0
-  direction: 0
 --- !u!212 &21239840
 SpriteRenderer:
   m_ObjectHideFlags: 1

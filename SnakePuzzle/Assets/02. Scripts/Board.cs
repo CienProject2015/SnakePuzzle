@@ -28,9 +28,6 @@ public class Board{
     private DB_Loader db_loader = new DB_Loader();
 
 
-
-
-
     public Board()
     {
         //board_Height = 7;

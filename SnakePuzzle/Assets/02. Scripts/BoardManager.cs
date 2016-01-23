@@ -34,6 +34,11 @@ public class BoardManager : MonoBehaviour {
 	}
     void initialize()
     {
+        float aa = 3;
+        aa = aa / 2;
+        Debug.Log(aa);
+
+
         ballMa = GameObject.Find("BallManager");
         ballMa.GetComponent<BallManager>().init(tileSize);
         timer = 4;
@@ -41,6 +46,8 @@ public class BoardManager : MonoBehaviour {
         mainBoard = new Board(board_Height, board_Width);
         //tile = loadMapFile(stage, level);
         tile = mainBoard.getTile();
+
+
         TileObject = new GameObject[board_Height, board_Width];
         /*for (int i = 0; i < board_Height; i++)
         {
@@ -52,6 +59,8 @@ public class BoardManager : MonoBehaviour {
 
         getAllSpawnPos_of_Ball();
         DrawBoard();
+
+        ballMa.GetComponent<BallManager>().setTile(ref tile);
     }
 
 
@@ -76,7 +85,7 @@ public class BoardManager : MonoBehaviour {
         timer = timer + Time.deltaTime;
         if (timer > BallSpawnTime)
         {
-            timer = 0;
+            timer = -0;
             SpawnBall_in_RandPos();
             //SpawnBall_in_RandPos();
             //SpawnBall_in_RandPos();
@@ -142,13 +151,17 @@ public class BoardManager : MonoBehaviour {
     public void SpawnBall_in_RandPos()
     {
         int temp = Random.Range(0,ballSpawnPos.Count);
-        SpawnBall(ballSpawnPos[temp]);
+        SpawnBall(ballSpawnPos[temp], (int)ballSpawnPos[temp].x, (int)ballSpawnPos[temp].y);
         ballSpawnPos.RemoveAt(temp);
     }
-    public void SpawnBall(Vector3 pos){
 
-        ballMa.GetComponent<BallManager>().SpawnBall(pos);
+
+    public void SpawnBall(Vector3 pos, int tilePosX, int tilePosY)
+    {
+        ballMa.GetComponent<BallManager>().SpawnBall(pos, tilePosX, tilePosY);
     }
+
+ 
     public void SwapTile()
     {
 
