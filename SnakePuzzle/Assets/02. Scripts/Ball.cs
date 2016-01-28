@@ -57,7 +57,10 @@ public class Ball{
     public void changeSize(float a)
     {
         ballSize = a;
-
+        if(ballSize>2)
+        {
+            ballSize = 1;
+        }
         ballTransform.localScale = new Vector3(ballSize, ballSize, ballSize);
     }
 
