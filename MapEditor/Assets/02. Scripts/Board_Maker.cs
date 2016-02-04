@@ -50,7 +50,7 @@ public class Board_Maker : MonoBehaviour {
 
 		for (int i = 0; i < board_Height; i++){
 			for (int j = 0; j < board_Width; j++){
-				TileObject[i, j] = Instantiate(RedTile, new Vector3(i * tileSize+(145-(board_Height-3)*15), j * tileSize+(161-(board_Height-3)*15), 0), Quaternion.identity) as GameObject;
+				TileObject[i, j] = Instantiate(RedTile, new Vector3(i * tileSize+(145-(board_Height-3)*15), j * tileSize+(162-(board_Width-3)*15), 0), Quaternion.identity) as GameObject;
 				TileObject[i, j].transform.parent = GameObject.Find("Board").transform;
 				Debug.Log("보드 생성 : "+i);
 				}
