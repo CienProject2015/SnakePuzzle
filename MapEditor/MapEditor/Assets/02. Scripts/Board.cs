@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Xml;
 
 public class Board{
-    private float tileSize = 1.0f;
+    private float tileSize = 30f;
     private string[, ] Tile;
 
     private int board_Height;
