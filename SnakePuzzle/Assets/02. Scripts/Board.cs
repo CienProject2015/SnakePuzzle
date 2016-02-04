@@ -22,8 +22,8 @@ using System.Collections.Generic;
 public class Board{
     private float tileSize = 1.0f;
     private string[, ] Tile;
-    private int board_Height;
-    private int board_Width;
+    private int board_Height=12;
+    private int board_Width=12;
     private string tempColor;
     private DB_Loader db_loader = new DB_Loader();
 
@@ -45,6 +45,15 @@ public class Board{
         Tile = db_loader.get_tile();
     }
 
+    public int getBoardWidth()
+    {
+        return board_Width;
+    }
+
+    public int getBoardHeight()
+    {
+        return board_Height;
+    }
     public string[,] getTile()
     {
         return Tile;

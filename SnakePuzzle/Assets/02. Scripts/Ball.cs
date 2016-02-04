@@ -13,6 +13,13 @@ public class Ball{
     private int myNum;
     private GameObject ball;
     private int dir;
+
+    // 0 = 위
+    // 1 = 오른쪽
+    // 2 = 아래
+    // 3 = 왼쪽
+    // Use this for initialization
+
     private integerXandY fromTilePos;
     private integerXandY toTilePos;
 
@@ -24,9 +31,36 @@ public class Ball{
     private Transform childTrans;
     private Transform ballTransform;
 
-    public GameObject showBall()
+    public Vector3 getVectorPos()
+    {
+        return ball.GetComponent<Transform>().position;
+    }
+    
+    public int getFromTileX()
+    {
+        return fromTilePos.x;
+    }
+
+    public int getFromTileY()
+    {
+        return fromTilePos.y;
+    }
+
+    public void setDirection(int dirr)
+    {
+        //setBoundStartPos();
+        dir = dirr;
+        setDestPos();
+    }
+
+    public GameObject getBallObject()
     {
         return ball;
+    }
+
+    public string getColor()
+    {
+        return color;
     }
 
     public Ball(GameObject theBall, int tilePosX, int tilePosY)
@@ -46,14 +80,15 @@ public class Ball{
 
         setDestPos();
         Debug.Log(dir);
-        showInfo();
+        DisplayInfo();
         setColor("Red");
     }
 
-    public float showSize()
+    public float getBallSize()
     {
         return ballSize;
     }
+
     public void changeSize(float a)
     {
         ballSize = a;
@@ -61,13 +96,22 @@ public class Ball{
         {
             ballSize = 1;
         }
+        if (ballSize < (float)(3 / 4))
+        {
+            ballSize = (float)(3 / 4);
+        }
+
+
         ballTransform.localScale = new Vector3(ballSize, ballSize, ballSize);
     }
 
-    public void showInfo()
+    public void DisplayInfo()
     {
-        Debug.Log("my num = " + myNum + "startingPos = " + fromTilePos.x + ", " + fromTilePos.y + "endingPos = " + toTilePos.x + ", " + toTilePos.y);
+        Debug.Log("my num = " + myNum + "color = " + color);
     }
+
+
+
 
     public void setDestPos()
     {
@@ -113,11 +157,6 @@ public class Ball{
 
     }
 
-    /*~Ball()
-    {
-        //Destroy(ball);
-    }*/
-
     public bool compareDest(Ball a)
     {
         
@@ -132,13 +171,16 @@ public class Ball{
     {
         return toTilePos.x;
     }
+
     public int getToY()
     {
         return toTilePos.y;
     }
+
+    
+
     public void _2Dmove(float moveDist, float y)
     {
-
         if (dir == 3)//방향이 왼쪽일때
         {
             ballTransform.position = new Vector3(myBoundStartPos.x - moveDist, myBoundStartPos.y, -0.5f);
@@ -158,7 +200,7 @@ public class Ball{
         childTrans.position = new Vector3(childTrans.position.x, ballTransform.position.y + y + 0.2f * BallManager.tileSize, -0.5f);
     }
 
-    public void changeDirection()
+    public void setBoundStartPos()
     {
         float tileSize = BallManager.tileSize;
 
@@ -179,8 +221,17 @@ public class Ball{
             myBoundStartPos = new Vector3(myBoundStartPos.x, myBoundStartPos.y + tileSize, -0.5f);
         }
 
-        //Debug.Log(myNum + "  " + myBoundStartPos.x + "  +  " + myBoundStartPos.y + "  +  " + myTransformPos.z);
-        //if()
+        //임시
+        fromTilePos.x = toTilePos.x;
+        fromTilePos.y = toTilePos.y;
+
+
+    }
+
+    public void setRandDirection()
+    {
+        setBoundStartPos();
+        
 
         dir = Random.Range(0, 4);
         
@@ -188,8 +239,8 @@ public class Ball{
         fromTilePos.x = toTilePos.x;
         fromTilePos.y = toTilePos.y;
 
+
         setDestPos();
-        showInfo();
     }
 
     private void checkLoc(int xSize = 11, int ySize = 11)

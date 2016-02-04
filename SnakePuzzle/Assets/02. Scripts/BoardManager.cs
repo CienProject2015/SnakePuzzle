@@ -44,6 +44,8 @@ public class BoardManager : MonoBehaviour {
         timer = 4;
 
         mainBoard = new Board(board_Height, board_Width);
+
+        
         //tile = loadMapFile(stage, level);
         tile = mainBoard.getTile();
 
@@ -61,6 +63,8 @@ public class BoardManager : MonoBehaviour {
         DrawBoard();
 
         ballMa.GetComponent<BallManager>().setTile(ref tile);
+        ballMa.GetComponent<BallManager>().SetBoard(ref mainBoard);
+
     }
 
 
