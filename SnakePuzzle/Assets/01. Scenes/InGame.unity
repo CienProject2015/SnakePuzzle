@@ -273,12 +273,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1071653090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c12810da0ddb75d4c9b32465155b82c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d26a005a102b33408fcebd16e8f46fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ballJumpPower: 6
   ballSpeed: 1
-  Ball: {fileID: 134102, guid: 2ceb169d6f07a3f4fb6019682f8473a0, type: 2}
+  BallPrefab: {fileID: 134102, guid: 2ceb169d6f07a3f4fb6019682f8473a0, type: 2}
 --- !u!4 &1071653092
 Transform:
   m_ObjectHideFlags: 0
