@@ -15,8 +15,9 @@ public class BoardManager : MonoBehaviour {
     private string[,] tile;
 
     private List<Vector3> ballSpawnPos = new List<Vector3>();
-    private List<GameObject> balls = new List<GameObject>();
-    private GameObject ballMa;
+
+    //private GameObject ballMa;
+    private BallManager_2d ballMa;
     private GameObject[,] TileObject;
 
     public GameObject Ball;
@@ -39,8 +40,9 @@ public class BoardManager : MonoBehaviour {
         Debug.Log(aa);
 
 
-        ballMa = GameObject.Find("BallManager");
-        ballMa.GetComponent<BallManager>().init(tileSize);
+        ballMa = GameObject.Find("BallManager").GetComponent<BallManager_2d>();
+        ballMa.setTIleSize(tileSize);
+        ballMa.setNumOfUsedColor(5);
         timer = 4;
 
         mainBoard = new Board(board_Height, board_Width);
@@ -62,8 +64,8 @@ public class BoardManager : MonoBehaviour {
         getAllSpawnPos_of_Ball();
         DrawBoard();
 
-        ballMa.GetComponent<BallManager>().setTile(ref tile);
-        ballMa.GetComponent<BallManager>().SetBoard(ref mainBoard);
+        ballMa.setTile(ref tile);
+        ballMa.SetBoard(ref mainBoard);
 
     }
 
@@ -84,8 +86,6 @@ public class BoardManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
-
         timer = timer + Time.deltaTime;
         if (timer > BallSpawnTime)
         {
@@ -97,8 +97,6 @@ public class BoardManager : MonoBehaviour {
             getAllSpawnPos_of_Ball();
         }
         
-
-         
 	}
 
     public void DrawBoard()
@@ -162,7 +160,7 @@ public class BoardManager : MonoBehaviour {
 
     public void SpawnBall(Vector3 pos, int tilePosX, int tilePosY)
     {
-        ballMa.GetComponent<BallManager>().SpawnBall(pos, tilePosX, tilePosY);
+        ballMa.SpawnBall(pos, tilePosX, tilePosY);
     }
 
  

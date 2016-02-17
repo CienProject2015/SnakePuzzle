@@ -2,10 +2,6 @@
 using System.Collections;
 
 
-struct integerXandY {
-    public int x;
-    public int y;
-}
 
 public class Ball{
 
@@ -63,7 +59,7 @@ public class Ball{
         return color;
     }
 
-    public Ball(GameObject theBall, int tilePosX, int tilePosY)
+    public Ball(ref GameObject theBall, int tilePosX, int tilePosY)
     {
         ballSize = 1;
         myNum = ballNum++;
@@ -96,9 +92,9 @@ public class Ball{
         {
             ballSize = 1;
         }
-        if (ballSize < (float)(3 / 4))
+        if (ballSize < (float)(0.66))
         {
-            ballSize = (float)(3 / 4);
+            ballSize = (float)(0.66);
         }
 
 
@@ -138,23 +134,15 @@ public class Ball{
         }
     }
 
-    public void Merge() {
-        
-    }
-
-    public void Branch()
-    {
-
-    }
-    
     public void setColor(string a)
     {
         color = a;
+        changeObjectColor(a);
     }
 
-    private void changeObjectColor()
+    private void changeObjectColor(string a)
     {
-
+        ball.GetComponent<BallMoving>().changeSprite(a);
     }
 
     public bool compareDest(Ball a)

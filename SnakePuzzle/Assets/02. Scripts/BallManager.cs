@@ -46,15 +46,15 @@ public class BallManager : MonoBehaviour
 
     public void SpawnBall(Vector3 pos, int tilePosX, int tilePosY)
     {
-        
-        myBalls.Add(new Ball(Instantiate(Ball, pos, Quaternion.identity) as GameObject, tilePosX, tilePosY));
+        GameObject abc = Instantiate(Ball, pos, Quaternion.identity) as GameObject;
+        myBalls.Add(new Ball(ref abc, tilePosX, tilePosY));
         myBalls[myBalls.Count - 1].setColor(getRndColor(numOfColors));
     }
 
-    public void SpawnBall_To_SpecficList(Vector3 pos, int tilePosX, int tilePosY, ref List<Ball> a)
+    public void SpawnBall_To_SpecificList(Vector3 pos, int tilePosX, int tilePosY, ref List<Ball> a)
     {
-        
-        a.Add(new Ball(Instantiate(Ball, pos, Quaternion.identity) as GameObject, tilePosX, tilePosY));
+        GameObject abc = Instantiate(Ball, pos, Quaternion.identity) as GameObject;
+        a.Add(new Ball(ref abc, tilePosX, tilePosY));
         a[a.Count - 1].setColor(getRndColor(numOfColors));
     }
 
@@ -70,7 +70,7 @@ public class BallManager : MonoBehaviour
                 color = "Blue";
                 break;
             case 2:
-                color = "Greed";
+                color = "Green";
                 break;
             case 3:
                 color = "Yellow";
@@ -82,6 +82,7 @@ public class BallManager : MonoBehaviour
                 color = "Red";
                 break;
         }
+        Debug.Log("결정된 색은 " + color);
         return color;
     }
 
@@ -193,7 +194,7 @@ public class BallManager : MonoBehaviour
                     for (int j = 0; j < ttemp.Count; j++)
                     {
 
-                        SpawnBall_To_SpecficList(myBalls[i].getVectorPos(), myBalls[i].getToX(), myBalls[i].getToY(), ref addBallList);
+                        SpawnBall_To_SpecificList(myBalls[i].getVectorPos(), myBalls[i].getToX(), myBalls[i].getToY(), ref addBallList);
 
                         addBallList[addBallList.Count - 1].setColor(color);
                         addBallList[addBallList.Count - 1].setDirection(ttemp[ttemp.Count - 1]);
