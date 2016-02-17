@@ -34,7 +34,6 @@ public class BallManager_2d : MonoBehaviour {
         balls = new List<GameObject>();
     }
 	
-	// Update is called once per frame
 	void Update (){
 
 
@@ -71,14 +70,15 @@ public class BallManager_2d : MonoBehaviour {
 
                     float tempSize = balls[i].GetComponent<_2dBall>().getBallSize() / ttemp.Count;
                     tempSize = 1;
+                    int num = Random.Range(0, ttemp.Count);
 
-                    balls[i].GetComponent<_2dBall>().setDirection(ttemp[ttemp.Count - 1]);
+                    balls[i].GetComponent<_2dBall>().setDirection(ttemp[num]);
                     balls[i].GetComponent<_2dBall>().setBallSize(tempSize);
-                    ttemp.RemoveAt(ttemp.Count - 1);
+                    ttemp.RemoveAt(num);
                 }
                 else // 갈 곳이 없으면 공을 지움
                 {
-
+                    Debug.Log("갈 길 없음.");
                     Destroy(balls[i]);
                     balls.RemoveAt(i);
                     i--;
@@ -209,7 +209,6 @@ public class BallManager_2d : MonoBehaviour {
                 color = "Red";
                 break;
         }
-        Debug.Log("결정된 색은 " + color);
         return color;
     }
 
@@ -245,7 +244,10 @@ public class BallManager_2d : MonoBehaviour {
         for(int i = 0; balls.Count > i; i++)
         {
             temp2dBallScript = balls[i].GetComponent<_2dBall>();
+
             temp2dBallScript.TotoFrom_Pos();
+            
+
         }
     }
 
@@ -256,6 +258,7 @@ public class BallManager_2d : MonoBehaviour {
         string color = a.GetComponent<_2dBall>().getColor();
         int x = a.GetComponent<_2dBall>().getFromPos().x_int;
         int y = a.GetComponent<_2dBall>().getFromPos().y_int;
+        Debug.Log(x + " + " + y);
 
         if (x > 0)
         {

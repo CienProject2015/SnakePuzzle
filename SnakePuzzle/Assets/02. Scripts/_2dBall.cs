@@ -13,6 +13,12 @@ public struct Pos
     public int y_int;
 
     public Vector3 vectorPos;
+    public void print()
+    {
+        Debug.Log("x = " + x_int);
+        Debug.Log("y = " + y_int);
+        Debug.Log("v = " + vectorPos);
+    }
 }
 
 public class _2dBall : MonoBehaviour {
@@ -27,7 +33,6 @@ public class _2dBall : MonoBehaviour {
     private integerXandY toTilePos;   //공이 도착하는 장소*/
 
     public Sprite[] Sprites;
-    private Sprite currentSprite;
 
     private float ballSize;
     private int direction;
@@ -43,7 +48,6 @@ public class _2dBall : MonoBehaviour {
         myTransform.parent = GameObject.Find("BallManager").transform;
         myChild_Ball_transform = myTransform.FindChild("Ball");
 
-        currentSprite = myTransform.FindChild("Ball").GetComponent<SpriteRenderer>().sprite;
         ballSize = 1;
 
         //setColor("Red");
@@ -51,7 +55,10 @@ public class _2dBall : MonoBehaviour {
 
     public void TotoFrom_Pos()
     {
+        fromPos.print();
         fromPos = toPos;
+        fromPos.print();
+        Debug.Log("----");
     }
     public void setFromPos(int x, int y, Vector3 a)
     {
@@ -78,6 +85,36 @@ public class _2dBall : MonoBehaviour {
     public void setDirection(int dir)
     {
         direction = dir;
+
+        toPos.x_int = fromPos.x_int;
+        toPos.y_int = fromPos.y_int;
+
+        if (dir == 3)//방향이 왼쪽일때
+        {
+            toPos.vectorPos = fromPos.vectorPos + new Vector3(-1.0f, 0, 0);
+            toPos.x_int = fromPos.x_int - 1;
+        }
+        else if (dir == 1)//오른쪽일때
+        {
+            toPos.vectorPos = fromPos.vectorPos + new Vector3(1.0f, 0, 0);
+            toPos.x_int = fromPos.x_int + 1;
+        }
+        else if (dir == 2)//아래일때
+        {
+            toPos.vectorPos = fromPos.vectorPos + new Vector3(0, -1.0f, 0);
+            toPos.y_int = fromPos.y_int - 1;
+        }
+        else//위일때
+        {
+            toPos.vectorPos = fromPos.vectorPos + new Vector3(0, 1.0f, 0);
+            toPos.y_int = fromPos.y_int + 1;
+        }
+
+    }
+
+    public int getDirection()
+    {
+        return direction;
     }
 
     public void setBallSize(float size)
@@ -114,7 +151,6 @@ public class _2dBall : MonoBehaviour {
     }
     public void changeSprite(string color)
     {
-        Debug.Log(color);
         int num = 99;
         switch (color)
         {
@@ -137,13 +173,10 @@ public class _2dBall : MonoBehaviour {
                 num = 99;
                 break;
         }
-        Debug.Log(num + "  " + Sprites.Length);
 
         if (Sprites.Length > num)
         {
-            Debug.Log(currentSprite.name + "에서");
-            currentSprite = Sprites[num];
-            Debug.Log(currentSprite.name + "로 색 바뀜");
+            myChild_Ball_transform.GetComponent<SpriteRenderer>().sprite = Sprites[num];
         }
         else
         {
