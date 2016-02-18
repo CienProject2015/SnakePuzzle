@@ -112,6 +112,17 @@ public class _2dBall : MonoBehaviour {
 
     }
 
+    public bool compareDest(GameObject a)
+    {
+        Pos tempPos = a.GetComponent<_2dBall>().getToPos();
+
+        if ((toPos.x_int == tempPos.x_int) && (toPos.y_int == tempPos.y_int))
+        {
+            return true;
+        }
+        return false;
+    }
+
     public int getDirection()
     {
         return direction;

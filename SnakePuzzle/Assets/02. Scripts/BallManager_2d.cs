@@ -57,8 +57,7 @@ public class BallManager_2d : MonoBehaviour {
         {
             BallMergeFound();
             AllballBounce();
-            List<Ball> addBallList = new List<Ball>();
-
+            List<GameObject> additionalBallList = new List<GameObject>();
             for (int i = 0; i < balls.Count; i++) // 공 방향 변경시킴
             {
                 List<int> ttemp = new List<int>();
@@ -67,14 +66,24 @@ public class BallManager_2d : MonoBehaviour {
 
                 if (ttemp.Count > 0)
                 {
-
+                    string clr = balls[i].GetComponent<_2dBall>().getColor();
                     float tempSize = balls[i].GetComponent<_2dBall>().getBallSize() / ttemp.Count;
-                    tempSize = 1;
+                    
                     int num = Random.Range(0, ttemp.Count);
 
                     balls[i].GetComponent<_2dBall>().setDirection(ttemp[num]);
                     balls[i].GetComponent<_2dBall>().setBallSize(tempSize);
                     ttemp.RemoveAt(num);
+
+                    if (ttemp.Count != 0) {
+                        for (int j = 0; j < ttemp.Count; j++){
+                            Pos alpha = balls[i].GetComponent<_2dBall>().getFromPos();
+                            GameObject a = SpawnBallwithDir(alpha.vectorPos, alpha.x_int, alpha.y_int, ttemp[ttemp.Count - 1], clr, tempSize);
+                            //addBallList.Add(SpawnBallwithDir(alpha.vectorPos, alpha.x_int, alpha.y_int, ttemp[ttemp.Count - 1], clr, tempSize));
+                            additionalBallList.Add(a);
+                        }
+                    }
+                    
                 }
                 else // 갈 곳이 없으면 공을 지움
                 {
@@ -87,6 +96,8 @@ public class BallManager_2d : MonoBehaviour {
                 //myBalls[i].changeDirection();
                 ttemp.Clear();
             }
+            balls.AddRange(additionalBallList);
+            additionalBallList.Clear();
             //myBalls.AddRange(addBallList);
             //addBallList.Clear();
             moveDist = 0;
@@ -172,14 +183,16 @@ public class BallManager_2d : MonoBehaviour {
         balls.Add(Ball);
     }
 
-    public void SpawnBallwithDir(Vector3 pos, int tilePosX, int tilePosY, int Dir)
+    public GameObject SpawnBallwithDir(Vector3 pos, int tilePosX, int tilePosY, int Dir, string clr, float size)
     {
         GameObject Ball = Instantiate(BallPrefab, pos, Quaternion.identity) as GameObject;
         Ball.GetComponent<_2dBall>().init();
         Ball.GetComponent<_2dBall>().setFromPos(tilePosX, tilePosY, pos);
         Ball.GetComponent<_2dBall>().setDirection(Dir);
-        Ball.GetComponent<_2dBall>().setColor(getRndColor());
-        balls.Add(Ball);
+        Ball.GetComponent<_2dBall>().setBallSize(size);
+        Ball.GetComponent<_2dBall>().setColor(clr);
+        return Ball;
+        //balls.Add(Ball);
     }
 
     
@@ -214,13 +227,13 @@ public class BallManager_2d : MonoBehaviour {
 
     private void BallMergeFound()
     {
-       /* List<int> temp = new List<int>();
+        List<int> temp = new List<int>();
         for (int i = 0; i < balls.Count; i++) // // 모든공에 대해서 겹침이 발생하는지 찾음 
         {
 
             for (int j = i + 1; j < balls.Count; j++)
             {
-                if (balls[i].compareDest(balls[j]))
+                if (balls[i].GetComponent<_2dBall>().compareDest(balls[j]))
                 { // 머지한다
                     Debug.Log("공 겹침 발생?");
                     temp.Add(j); //공을 머지한다.
@@ -228,26 +241,26 @@ public class BallManager_2d : MonoBehaviour {
             }
             for (int j = 0; j < temp.Count; j++) // 발생한 공들을 머지한다.
             {
-                MergeBallAandB(myBalls[i], myBalls[temp[temp.Count - 1]]);
-                myBalls.RemoveAt(temp[temp.Count - 1]);
+                balls[i].GetComponent<_2dBall>().setBallSize(balls[i].GetComponent<_2dBall>().getBallSize() + balls[temp[temp.Count - 1]].GetComponent<_2dBall>().getBallSize());
+                Destroy(balls[temp[temp.Count - 1]]);
+                balls.RemoveAt(temp[temp.Count - 1]);
                 temp.RemoveAt(temp.Count - 1);
                 //공 i 와 j를 머지한다.
             }
 
             temp.Clear();
-        }*/
+        }
     }
 
     private void AllballBounce()
     {
         _2dBall temp2dBallScript;
-        for(int i = 0; balls.Count > i; i++)
+        for(int i = 0; i < balls.Count; i++)
         {
+            Debug.Log("i를 출력합니다. i = " + i);
             temp2dBallScript = balls[i].GetComponent<_2dBall>();
 
             temp2dBallScript.TotoFrom_Pos();
-            
-
         }
     }
 
