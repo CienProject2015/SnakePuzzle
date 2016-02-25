@@ -18,7 +18,7 @@ public class BallManager_2d : MonoBehaviour {
     private int numOfColors;
     private bool isOktoMoveBlock;
 
-
+    private List<Pos> tempPosToChange;
 
 
     private Board inGameBoard;
@@ -32,6 +32,7 @@ public class BallManager_2d : MonoBehaviour {
     // Use this for initialization
     void Start () {
         balls = new List<GameObject>();
+        tempPosToChange = new List<Pos>();
     }
 	
 	void Update (){
@@ -55,19 +56,56 @@ public class BallManager_2d : MonoBehaviour {
 
         if (moveDist > tileSize) // 공이 방향을 바꿔야 할 때 바꿔말하면 공이 튕길때
         {
+            
             BallMergeFound();
             AllballBounce();
             List<GameObject> additionalBallList = new List<GameObject>();
             for (int i = 0; i < balls.Count; i++) // 공 방향 변경시킴
             {
+                /////////// 밟은
+                int tempCounter = 0;
+                for (int k = 0; k < tempPosToChange.Count; k++)
+                {
+                    if (tempPosToChange[i].x_int == balls[i].GetComponent<_2dBall>().getFromPos().x_int)
+                    {
+                        if (tempPosToChange[i].y_int == balls[i].GetComponent<_2dBall>().getFromPos().y_int)
+                        {
+                            tempCounter++;
+                            break;
+                        }
+                    }
+                }
+                if (tempCounter == 0)
+                {
+                    tempPosToChange.Add(balls[i].GetComponent<_2dBall>().getFromPos());
+                }
+                ///////////
+                
+
                 List<int> ttemp = new List<int>();
 
                 ttemp = getAvailableDirection(balls[i]);
 
                 if (ttemp.Count > 0)
                 {
+                    
                     string clr = balls[i].GetComponent<_2dBall>().getColor();
-                    float tempSize = balls[i].GetComponent<_2dBall>().getBallSize() / ttemp.Count;
+                    float tempSize = balls[i].GetComponent<_2dBall>().getBallSize();
+                    switch (ttemp.Count)
+                    {
+                        case 2:
+                            tempSize *= 0.79f;
+                            break;
+                        case 3:
+                            tempSize *= 0.69f;
+                            break;
+                        case 4:
+                            tempSize *= 0.63f;
+                            break;
+                        case 1:
+                        default:
+                            break;
+                    }
                     
                     int num = Random.Range(0, ttemp.Count);
 
@@ -102,6 +140,13 @@ public class BallManager_2d : MonoBehaviour {
             //addBallList.Clear();
             moveDist = 0;
 
+            BoardManager aaaaa = GameObject.Find("BoardManager").GetComponent<BoardManager>();
+            
+            for (int i = 0; i < tempPosToChange.Count; i++)
+            {
+                aaaaa.changeBlock(tempPosToChange[i]);
+            }
+            tempPosToChange.Clear();
         }
         else // 공 움직이게 함
         {
@@ -110,6 +155,7 @@ public class BallManager_2d : MonoBehaviour {
                 balls[i].GetComponent<_2dBall>()._2Dmove(moveDist, y);
             }
         }
+        
     }
 
 
@@ -236,12 +282,16 @@ public class BallManager_2d : MonoBehaviour {
                 if (balls[i].GetComponent<_2dBall>().compareDest(balls[j]))
                 { // 머지한다
                     Debug.Log("공 겹침 발생?");
-                    temp.Add(j); //공을 머지한다.
+                    temp.Add(j); //발생한 공을 임시저장한다.
                 }
             }
+            
             for (int j = 0; j < temp.Count; j++) // 발생한 공들을 머지한다.
             {
-                balls[i].GetComponent<_2dBall>().setBallSize(balls[i].GetComponent<_2dBall>().getBallSize() + balls[temp[temp.Count - 1]].GetComponent<_2dBall>().getBallSize());
+                //balls[i].GetComponent<_2dBall>().setBallSize(balls[i].GetComponent<_2dBall>().getBallSize() + balls[temp[temp.Count - 1]].GetComponent<_2dBall>().getBallSize());
+                float tempSize1 = balls[i].GetComponent<_2dBall>().getBallSize();
+                float tempSize2 = balls[temp[temp.Count - 1]].GetComponent<_2dBall>().getBallSize();
+                balls[i].GetComponent<_2dBall>().setBallSize(Mathf.Pow(Mathf.Pow(tempSize1, 3) + Mathf.Pow(tempSize2, 3), 0.33f));
                 Destroy(balls[temp[temp.Count - 1]]);
                 balls.RemoveAt(temp[temp.Count - 1]);
                 temp.RemoveAt(temp.Count - 1);

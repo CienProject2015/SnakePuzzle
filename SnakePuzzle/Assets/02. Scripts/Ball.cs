@@ -88,13 +88,13 @@ public class Ball{
     public void changeSize(float a)
     {
         ballSize = a;
-        if(ballSize>2)
+        if(ballSize>2.2f)
         {
-            ballSize = 1;
+            ballSize = 2.2f;
         }
-        if (ballSize < (float)(0.66))
+        if (ballSize < (float)(0.4))
         {
-            ballSize = (float)(0.66);
+            ballSize = (float)(0.4);
         }
 
 

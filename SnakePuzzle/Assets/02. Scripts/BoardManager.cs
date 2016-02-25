@@ -15,6 +15,7 @@ public class BoardManager : MonoBehaviour {
     private string[,] tile;
 
     private List<Vector3> ballSpawnPos = new List<Vector3>();
+    string[] colorSet = new string[5];
 
     //private GameObject ballMa;
     private BallManager_2d ballMa;
@@ -35,6 +36,12 @@ public class BoardManager : MonoBehaviour {
 	}
     void initialize()
     {
+        colorSet[0] = "Red";
+        colorSet[1] = "Blue";
+        colorSet[2] = "Yellow";
+        colorSet[3] = "Green";
+        colorSet[4] = "Purple";
+
         float aa = 3;
         aa = aa / 2;
         Debug.Log(aa);
@@ -98,6 +105,71 @@ public class BoardManager : MonoBehaviour {
         }
         
 	}
+    string getRandomColor(string a)
+    {
+        int tempNum = 0;
+        for (int i = 0; i < colorSet.Length; i++)
+        {
+            if (colorSet[i].Equals(a))
+            {
+                tempNum = i;
+                break;
+            }
+        }
+
+        int colorNum = Random.Range(0, colorSet.Length-1);
+        if (colorNum > tempNum - 1)
+        {
+            colorNum++;
+        }
+
+        return colorSet[colorNum];
+    }
+    public void changeBlock(Pos a)
+    {
+        
+        int i = a.x_int;
+        int j = a.y_int;
+        tile[i, j] = getRandomColor(tile[i, j]);
+        Destroy(TileObject[i,j]);
+
+        switch (tile[i, j])
+        {
+            case "Red":
+                TileObject[i, j] = Instantiate(RedTile, new Vector3(i * tileSize, j * tileSize, 0), Quaternion.identity) as GameObject;
+                TileObject[i, j].transform.parent = GameObject.Find("Board").transform;
+                //GOlist.Add(Instantiate(RedTile, new Vector3(i * tileSize, j * tileSize, 0), Quaternion.identity));
+                //Instantiate(RedTile, new Vector3(i * tileSize, j * tileSize, 0), Quaternion.identity);
+                break;
+            case "Blue":
+                TileObject[i, j] = Instantiate(BlueTile, new Vector3(i * tileSize, j * tileSize, 0), Quaternion.identity) as GameObject;
+                TileObject[i, j].transform.parent = GameObject.Find("Board").transform;
+                break;
+            case "Yellow":
+                TileObject[i, j] = Instantiate(YellowTile, new Vector3(i * tileSize, j * tileSize, 0), Quaternion.identity) as GameObject;
+                TileObject[i, j].transform.parent = GameObject.Find("Board").transform;
+                break;
+            case "Green":
+                TileObject[i, j] = Instantiate(GreenTile, new Vector3(i * tileSize, j * tileSize, 0), Quaternion.identity) as GameObject;
+                TileObject[i, j].transform.parent = GameObject.Find("Board").transform;
+                break;
+            case "Purple":
+                TileObject[i, j] = Instantiate(PurpleTile, new Vector3(i * tileSize, j * tileSize, 0), Quaternion.identity) as GameObject;
+                TileObject[i, j].transform.parent = GameObject.Find("Board").transform;
+                break;
+            case "SpawnLeft":
+            case "SpawnRight":
+            case "SpawnUp":
+            case "SpawnDown":
+                TileObject[i, j] = Instantiate(SpawnTile, new Vector3(i * tileSize, j * tileSize, 0), Quaternion.identity) as GameObject;
+                TileObject[i, j].transform.parent = GameObject.Find("Board").transform;
+                break;
+            default:
+                Debug.Log(tile[i, j]);
+                Debug.Log("None");
+                break;
+        }
+    }
 
     public void DrawBoard()
     {
