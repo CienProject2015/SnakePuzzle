@@ -13,7 +13,7 @@ GameObject:
   - 23: {fileID: 2351956}
   - 114: {fileID: 11497638}
   m_Layer: 0
-  m_Name: Tile_Blue
+  m_Name: Block_Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

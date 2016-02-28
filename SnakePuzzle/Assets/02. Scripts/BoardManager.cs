@@ -15,8 +15,9 @@ public class BoardManager : MonoBehaviour {
     private string[,] tile;
 
     private List<Vector3> ballSpawnPos = new List<Vector3>();
-    private List<GameObject> balls = new List<GameObject>();
-    private GameObject ballMa;
+
+    //private GameObject ballMa;
+    private BallManager_2d ballMa;
     private GameObject[,] TileObject;
 
     public GameObject Ball;
@@ -34,13 +35,23 @@ public class BoardManager : MonoBehaviour {
 	}
     void initialize()
     {
-        ballMa = GameObject.Find("BallManager");
-        ballMa.GetComponent<BallManager>().init(tileSize);
+        float aa = 3;
+        aa = aa / 2;
+        //Debug.Log(aa);
+
+
+        ballMa = GameObject.Find("BallManager").GetComponent<BallManager_2d>();
+        ballMa.setTIleSize(tileSize);
+        ballMa.setNumOfUsedColor(5);
         timer = 4;
 
         mainBoard = new Board(board_Height, board_Width);
+
+        
         //tile = loadMapFile(stage, level);
         tile = mainBoard.getTile();
+
+
         TileObject = new GameObject[board_Height, board_Width];
         /*for (int i = 0; i < board_Height; i++)
         {
@@ -52,6 +63,10 @@ public class BoardManager : MonoBehaviour {
 
         getAllSpawnPos_of_Ball();
         DrawBoard();
+
+        ballMa.setTile(ref tile);
+        ballMa.SetBoard(ref mainBoard);
+
     }
 
 
@@ -71,28 +86,24 @@ public class BoardManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
-
         timer = timer + Time.deltaTime;
         if (timer > BallSpawnTime)
         {
-            timer = 0;
+            timer = -0;
             SpawnBall_in_RandPos();
-            SpawnBall_in_RandPos();
-            SpawnBall_in_RandPos();
+            //SpawnBall_in_RandPos();
+            //SpawnBall_in_RandPos();
             ballSpawnPos.Clear();
             getAllSpawnPos_of_Ball();
         }
         
-
-         
 	}
 
     public void DrawBoard()
     {
-        Debug.Log("보드 생성중");
-        Debug.Log(board_Height);
-        Debug.Log(board_Width);
+ //       Debug.Log("보드 생성중");
+   //     Debug.Log(board_Height);
+     //   Debug.Log(board_Width);
 
         for (int i = 0; i < board_Height; i++)
         {
@@ -130,7 +141,8 @@ public class BoardManager : MonoBehaviour {
                         TileObject[i, j].transform.parent = GameObject.Find("Board").transform;
                         break;
                     default:
-                        Debug.Log("None");
+                      //  Debug.Log(tile[i, j]);
+                     //   Debug.Log("None");
                         break;
                 }
             }
@@ -141,13 +153,17 @@ public class BoardManager : MonoBehaviour {
     public void SpawnBall_in_RandPos()
     {
         int temp = Random.Range(0,ballSpawnPos.Count);
-        SpawnBall(ballSpawnPos[temp]);
+        SpawnBall(ballSpawnPos[temp], (int)ballSpawnPos[temp].x, (int)ballSpawnPos[temp].y);
         ballSpawnPos.RemoveAt(temp);
     }
-    public void SpawnBall(Vector3 pos){
 
-        ballMa.GetComponent<BallManager>().SpawnBall(pos);
+
+    public void SpawnBall(Vector3 pos, int tilePosX, int tilePosY)
+    {
+        ballMa.SpawnBall(pos, tilePosX, tilePosY);
     }
+
+ 
     public void SwapTile()
     {
 

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 
+
 /*
  * Red
  * Blue
@@ -22,19 +23,40 @@ using System.Xml;
 public class Board{
     private float tileSize = 1.0f;
     private string[, ] Tile;
-    private int board_Height;
-    private int board_Width;
+    private int board_Height=12;
+    private int board_Width=12;
     private string tempColor;
+
 	private DB_Loader db_loader= new DB_Loader();
 
-    public Board(){
-		Tile = db_loader.get_tile();
+	public Board()
+    {
+        //board_Height = 7;
+        //board_Width = 7;
+        //Tile = new string[board_Height, board_Width];
+        //makeRndSquare();
+        Tile = db_loader.get_tile();
     }
 
-    public Board(int a, int b){
-		Tile = db_loader.get_tile();
+    public Board(int a, int b)
+    {
+        /*board_Height = a;
+        board_Width = b;
+        Tile = new string[board_Height, board_Width];
+        makeRndSquare();*/
+        Tile = db_loader.get_tile();
     }
 
+    public int getBoardWidth()
+    {
+        return board_Width;
+    }
+
+    public int getBoardHeight()
+    {
+        return board_Height;
+    }
+  
     public string[,] getTile(){
         return Tile;
     }

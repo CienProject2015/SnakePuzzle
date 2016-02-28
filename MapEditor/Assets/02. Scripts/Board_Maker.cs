@@ -13,12 +13,8 @@ public class Board_Maker : MonoBehaviour {
 
 	private GameObject[,] TileObject;
 
-	public GameObject RedTile;
-	public GameObject YellowTile;
-	public GameObject GreenTile;
-	public GameObject BlueTile;
-	public GameObject PurpleTile;
-	public GameObject SpawnTile;
+	public GameObject BlackTile;
+
 
 	public void put_size(int h, int w){
 		this.board_Height = h;
@@ -50,59 +46,11 @@ public class Board_Maker : MonoBehaviour {
 
 		for (int i = 0; i < board_Height; i++){
 			for (int j = 0; j < board_Width; j++){
-				TileObject[i, j] = Instantiate(RedTile, new Vector3(i * tileSize+(450-(board_Height-3)*30), j * tileSize+(370-(board_Width-3)*30), 0), Quaternion.identity) as GameObject;
+				TileObject[i, j] = Instantiate(BlackTile, new Vector3(i * tileSize+((board_Height-3)*30), j * tileSize+((board_Width-3)*30), 0), Quaternion.identity) as GameObject;
 				TileObject[i, j].transform.parent = GameObject.Find("Board").transform;
 				Debug.Log("보드 생성 : "+i);
 				}
-			}
-		
-	
-		/*
-		for (int i = 0; i < board_Height; i++)
-		{
-			for (int j = 0; j < board_Width; j++)
-			{
-				switch (tile[i, j])
-				{
-				case "Red":
-					TileObject[i, j] = Instantiate(RedTile, new Vector3(i * tileSize, j * tileSize, 0), Quaternion.identity) as GameObject;
-					TileObject[i, j].transform.parent = GameObject.Find("Board").transform;
-					//GOlist.Add(Instantiate(RedTile, new Vector3(i * tileSize, j * tileSize, 0), Quaternion.identity));
-					//Instantiate(RedTile, new Vector3(i * tileSize, j * tileSize, 0), Quaternion.identity);
-					break;
-				case "Blue":
-					TileObject[i,j] = Instantiate(BlueTile, new Vector3(i * tileSize, j * tileSize, 0), Quaternion.identity) as GameObject;
-					TileObject[i, j].transform.parent = GameObject.Find("Board").transform;
-					break;
-				case "Yellow":
-					TileObject[i, j] = Instantiate(YellowTile, new Vector3(i * tileSize, j * tileSize, 0), Quaternion.identity) as GameObject;
-					TileObject[i, j].transform.parent = GameObject.Find("Board").transform;
-					break;
-				case "Green":
-					TileObject[i, j] = Instantiate(GreenTile, new Vector3(i * tileSize, j * tileSize, 0), Quaternion.identity) as GameObject;
-					TileObject[i, j].transform.parent = GameObject.Find("Board").transform;
-					break;
-				case "Purple":
-					TileObject[i, j] = Instantiate(PurpleTile, new Vector3(i * tileSize, j * tileSize, 0), Quaternion.identity) as GameObject;
-					TileObject[i, j].transform.parent = GameObject.Find("Board").transform;
-					break;
-				case "SpawnLeft":
-				case "SpawnRight":
-				case "SpawnUp":
-				case "SpawnDown":
-					TileObject[i, j] = Instantiate(SpawnTile, new Vector3(i * tileSize, j * tileSize, 0), Quaternion.identity) as GameObject;
-					TileObject[i, j].transform.parent = GameObject.Find("Board").transform;
-					break;
-				default:
-					Debug.Log("None");
-					break;
-				}
-			}
-		}
-	*/
-	
-	
-	
+			}	
 	}
 
 
