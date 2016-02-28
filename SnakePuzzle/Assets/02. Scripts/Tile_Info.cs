@@ -45,10 +45,10 @@ public class Tile_Info : MonoBehaviour{
 	}
 
 	private void swap(GameObject target){
-		
-		Vector3 temp = new Vector3 (target.transform.position.x,target.transform.position.y,target.transform.position.z);
-		target.transform.position = clicked.transform.position;
-		clicked.transform.position = temp;
-	
+		if (target != null) {
+			Vector3 temp = new Vector3 (target.transform.position.x, target.transform.position.y, target.transform.position.z);
+			target.transform.position = clicked.transform.position;
+			clicked.transform.position = temp;
+		}
 	}
 }
